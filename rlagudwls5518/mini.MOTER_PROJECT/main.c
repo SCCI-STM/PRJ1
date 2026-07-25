@@ -65,7 +65,6 @@ void state_handler(){
 		printf("main key release\n");
 		if(!is_long_pressed){
 			Motor_ProcessKeyState();
-			Timer5_Out_Pwm_Generator(MOTOR_SPEED_STEP(50));
 		}
 		event = NONE;
 	}

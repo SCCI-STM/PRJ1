@@ -6,7 +6,7 @@
 #define PWM_INPUT_FREQ       10000
 #define MOTOR_SPEED_INIT     50
 #define MOTOR_SPEED_UP       5
-#define MOTOR_SPEED_STEP(x)  ((MOTOR_SPEED_UP) + ((MOTOR_SPEED_INIT) * (x)))
+#define MOTOR_SPEED_STEP(x)  ((MOTOR_SPEED_INIT) + ((MOTOR_SPEED_UP) * (x)))
 
 typedef enum
 {
