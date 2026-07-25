@@ -4,12 +4,13 @@
 #define TIM2_FREQ 	  		(1000000/TIM2_TICK)	// Hz
 #define TIME2_PLS_OF_1ms  	(1000/TIM2_TICK)
 #define TIM2_MAX	  		(0xffffu)
+#define TIM2_INIT           (3000)
 
 void Timer2_Init(void){
 	Macro_Set_Bit(RCC->APB1ENR, 0);
 	TIM2->CR1 = (1<<4)|(1<<3);
 	TIM2->PSC = (unsigned int)(TIMXCLK/50000.0 + 0.5)-1;
-	TIM2->ARR = 3000 * TIME2_PLS_OF_1ms;
+	TIM2->ARR = TIM2_INIT * TIME2_PLS_OF_1ms;
 
 }
 
