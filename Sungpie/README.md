@@ -1,11 +1,11 @@
-## 🐛 Trouble Shooting: 타이머 시작 시 의도치 않은 인터럽트 발생 문제
+## Trouble Shooting: 타이머 시작 시 의도치 않은 인터럽트 발생 문제
 
-### 📌 문제 증상
+### 문제 증상
 타이머를 시작할 때(`Timer2_Start`), 타이머 카운팅이 정식으로 시작되기도 전에 **시작과 동시에 인터럽트가 즉시 발생하는 현상**이 발생.
 
 ---
 
-### 🔍 원인 분석
+### 원인 분석
 
 MCU 타이머에서 `EGR(Event Generation Register)`의 0번 비트(UG, Update Generation)를 `1`로 세트하면 레지스터 적재가 일어나면서 **`SR(Status Register)`의 0번 비트(UIF, Update Interrupt Flag)가 자동으로 `1`로 세트**.
 
@@ -14,13 +14,13 @@ MCU 타이머에서 `EGR(Event Generation Register)`의 0번 비트(UG, Update G
   2. `EGR`을 세트함 → **이 순간 `SR`의 0번 비트가 다시 `1`로 켜짐.**
   3. `DIER`을 설정해 인터럽트를 허용함 → `SR`의 플래그가 `1`인 상태이므로 **즉시 인터럽트 실행**.
 
-> 💡 **비유로 이해하기**  
+> **비유로 이해하기**  
 > `EGR`을 건드리는 것은 **"새 설정을 적용하면서 공사 먼지를 만드는 작업"**과 같음.  
 > 먼지(`SR` 플래그)를 먼저 닦아낸 다음 공사(`EGR` 세트)를 시작하면 다시 먼지가 쌓임. 따라서 **공사(`EGR`)를 먼저 마친 후 먼지(`SR`)를 닦아내고, 마지막에 앰프(`DIER`)를 켜야** 소음 없이 깨끗하게 작동.
 
 ---
 
-### 💻 코드 비교
+### 코드 비교
 
 #### 문제 코드 (Before)
 `EGR`을 세트하기 전에 `SR`을 먼저 지우는 바람에, `EGR` 실행 시 발생한 플래그가 그대로 남아 인터럽트가 즉시 터지는 구조.
@@ -28,7 +28,7 @@ MCU 타이머에서 `EGR(Event Generation Register)`의 0번 비트(UG, Update G
 ```c
 void Timer2_Start(void)
 {
-    // ❌ EGR 세트 전에 SR을 지움 (뒤에서 다시 1로 켜지므로 의미 없음)
+    // EGR 세트 전에 SR을 지움 (뒤에서 다시 1로 켜지므로 의미 없음)
     Macro_Clear_Bit(TIM2->SR, 0);
 
     // EGR 세트 시 Update Event 발생 -> SR의 UIF 비트가 다시 1로 세트됨!
