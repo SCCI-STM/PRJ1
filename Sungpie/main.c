@@ -8,7 +8,7 @@ volatile int Uart_Data_In = 0;
 volatile unsigned char Uart_Data = 0;
 volatile int TIM4_Expired = 0;
 
-volatile Event event = NONE;
+Event event = NONE;
 
 int lock = 0;
 

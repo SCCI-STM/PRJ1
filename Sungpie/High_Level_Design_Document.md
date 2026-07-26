@@ -169,13 +169,13 @@
 | main.c | 상태변수  | volatile | int           | is_long_pressed   | 0    | 키가 3초이상 눌렸는지             |
 | main.c | 상태변수  | volatile | int           | is_key_pressed    | 0    | 키를 누르고 있는 상태인지           |
 | main.c | 상태변수  | volatile | int           | uart_data_in      | 0    | uart로 데이터가 들어왔다면 무슨 타입인지 |
-| main.c | 데이터변수 | volatile | unsigned char | input_motor_dir   | 0    | 데이터 변수                   |
-| main.c | 데이터변수 | volatile | int           | input_motor_speed | 0    | 데이터 변수                   |
+| main.c | 데이터변수 | volatile | unsigned char | input_motor_dir   | 0    | 모터가 어떤 방향인지                   |
+| main.c | 데이터변수 | volatile | int           | input_motor_speed | 0    | Uart로 요청한 모터 속력               |
 
 
 | 파일명    | 구분    | 특수 키워드   | 타입            | 변수명               | 초기값  | 역할                       |
 | ------ | ----- | -------- | ------------- | ----------------- | ---- | ------------------------ |
-| motor.c         | 상태변수   | static   | MotoeState | running_state       | MOTOR_STOP                               | 현재 동작하는 상태를 저장         |
+| motor.c         | 상태변수   | static   | MotorState | running_state       | MOTOR_STOP                               | 현재 동작하는 상태를 저장         |
 | motor.c         | 플래그 변수 | volatile | int        | TIM3_Expired        | 0                                        | 타이머3번이 타임아웃됬는지 확인하는 변수 |
 
 
@@ -218,9 +218,9 @@
 
 | 파일명 | 타입 | 함수이름 | 매개변수 | 반환값 | 역할 |
 | :--- | :--- | :--- | :--- | :--- | :--- |
-| **exception.c** | ISR | TIM3_IRQHandler | void | void | 타이머 3 인터럽트 서비스 루틴 |
 | **exception.c** | ISR | EXTI15_10_IRQHandler | void | void | 외부 인터럽트(버튼) 서비스 루틴 |
 | **exception.c** | ISR | TIM2_IRQHandler | void | void | 타이머 2 인터럽트 서비스 루틴 |
+| **exception.c** | ISR | TIM3_IRQHandler | void | void | 타이머 3 인터럽트 서비스 루틴 |
 | **exception.c** | ISR | USART2_IRQHandler | void | void | USART2 통신 인터럽트 서비스 루틴 |
 
 ### 6. main.c - 메인함수 상세

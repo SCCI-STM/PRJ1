@@ -19,13 +19,13 @@ void Timer2_Init(void)
 		TIM2->CR1 = (1<<4)|(1<<3);
 
 		// 분주비(1991) 설정
-		TIM2->PSC = (unsigned int)(TIMXCLK/(double)TIM2_FREQ + 0.5)-1;
+		TIM2->PSC = (unsigned int)(TIMXCLK/50000.0 + 0.5)-1;
 
 		// 카운트 값 설정
 		TIM2->ARR =  TIME2_PLS_OF_1ms * 3000 - 1;
 
 		// 적재 (Update Event 발생 -> SR의 UIF 세트 -> 인터럽트 요청)
-		Macro_Set_Bit(TIM2->EGR,0);
+		// Macro_Set_Bit(TIM2->EGR,0);
 }
 
 void TIM2_Interrupt_Enable(int en)
@@ -47,6 +47,7 @@ void TIM2_Interrupt_Enable(int en)
 	else
 	{
 		NVIC_DisableIRQ(28);
+		Macro_Clear_Bit(TIM2->CR1, 0);
 		Macro_Clear_Bit(TIM2->DIER, 0);
 	}
 }
@@ -59,7 +60,7 @@ void Timer2_Start(void)
 	Macro_Set_Bit(TIM2->EGR, 0);
 
 	Macro_Clear_Bit(TIM2->SR, 0);
-	(void)TIM2->SR;
+	// (void)TIM2->SR;
 	NVIC_ClearPendingIRQ(28);
 
 	// TIM2 Interrupt Enable
@@ -81,7 +82,7 @@ void Timer2_Delay(int time)
 
 	TIM2->CR1 = (0x1<<4)|(0x1<<3);
 	TIM2->PSC = (unsigned int)(TIMXCLK/(double)TIM2_FREQ + 0.5)-1;
-	TIM2->ARR = TIME2_PLS_OF_1ms * time;
+	TIM2->ARR = TIME2_PLS_OF_1ms * 3000;
 
 	Macro_Set_Bit(TIM2->EGR,0);
 	Macro_Clear_Bit(TIM2->SR, 0);

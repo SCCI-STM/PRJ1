@@ -30,7 +30,7 @@ extern MotorState curr_state;
 extern volatile unsigned char is_key_pressed;
 extern volatile unsigned char is_long_pressed;
 
-extern volatile Event event;
+extern Event event;
 
 extern int lock;
 
