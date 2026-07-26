@@ -104,8 +104,8 @@ void Timer5_Out_Pwm_Generator(int duty)
 	//TIM3->ARR = freq * TIME3_PLS_OF_1ms;
 	TIM5->ARR = (int)(((double)TIM5_FREQ / PWM_INPUT_FREQ + 0.5)-1);
 	// Duty Rate 50%가 되도록 CCR3 설정
-	TIM5->CCR1 = (double)(TIM5->ARR / 100) * duty;
-	TIM5->CCR2 = (double)(TIM5->ARR / 100) * duty;
+	TIM5->CCR1 = TIM5->ARR * duty / 100;
+	TIM5->CCR2 = TIM5->ARR * duty / 100;
 	// Manual Update(UG 발생)
 	Macro_Set_Bit(TIM5->EGR, 0);
 	// Down Counter, Repeat Mode, Timer Start
