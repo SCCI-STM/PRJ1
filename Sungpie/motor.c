@@ -48,20 +48,35 @@ void Motor_ProcessKeyState(void)
 
 void Motor_Main(void)
 {
-	if((curr_state == MOTOR_CW) && (prev_state == MOTOR_STOP) && lock)
+	if((curr_state == MOTOR_CW) && (prev_state == MOTOR_STOP))
 	{
-		Motor_RotateCW();
-		lock = 0;
+		if(lock == 1)
+		{
+			lock = 0;
+			Motor_Stop();
+			Timer3_Delay(100);
+			Motor_RotateCW();
+		}	
 	}
-	else if((curr_state == MOTOR_CW) && (prev_state == MOTOR_CCW) && lock)
+	else if((curr_state == MOTOR_CCW) && (prev_state == MOTOR_CW))
 	{
-		Motor_RotateCCW();
-		lock = 0;
+		if(lock == 1)
+		{
+			lock = 0;
+			Motor_Stop();
+			Timer3_Delay(100);
+			Motor_RotateCCW();
+		}	
 	}
-	else if((curr_state == MOTOR_CCW) && (prev_state == MOTOR_STOP) && lock)
+	else if((curr_state == MOTOR_CW) && (prev_state == MOTOR_CCW))
 	{
-	 	Motor_RotateCCW();
-		lock = 0;
+	 	if(lock == 1)
+		{
+			lock = 0;
+			Motor_Stop();
+			Timer3_Delay(100);
+			Motor_RotateCW();
+		}
 	}
 
 }
@@ -82,15 +97,11 @@ void Motor_Right(int duty)
 }
 void Motor_RotateCW(void)
 {
-	Motor_Stop();
-	Timer2_Delay(100);
 	Macro_Set_Bit(GPIOA->ODR, 0);
 	Macro_Clear_Bit(GPIOA->ODR, 1);
 }
 void Motor_RotateCCW(void)
 {
-	Motor_Stop();
-	// Timer2_Delay(100);
-	// Macro_Clear_Bit(GPIOA->ODR, 0);
-	// Macro_Set_Bit(GPIOA->ODR, 1);
+	Macro_Clear_Bit(GPIOA->ODR, 0);
+	Macro_Set_Bit(GPIOA->ODR, 1);
 }

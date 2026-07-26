@@ -22,6 +22,7 @@ static void Sys_Init(int baud)
 	setvbuf(stdout, NULL, _IONBF, 0);
 	Motor_Init();
 	Timer2_Init();
+	Timer3_Init();
 }
 
 void Main(void)

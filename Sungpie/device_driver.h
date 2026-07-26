@@ -52,9 +52,11 @@ extern char Uart2_Get_Pressed(void);
 extern void Timer2_Init(void);
 extern void Timer2_Start(void);
 extern void Timer2_Stop(void);
-extern void Timer2_Delay(int time);
 extern int Timer2_IsTimeout(void);
 extern void TIM2_Interrupt_Enable(int en);
+
+extern void Timer3_Init(void);
+extern void Timer3_Delay(int time);
 
 extern void Timer5_Init(void);
 extern void Timer5_Out_Pwm_Generator(unsigned short freq);
