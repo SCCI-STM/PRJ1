@@ -23,6 +23,7 @@ static void Sys_Init(int baud)
 	Motor_Init();
 	Timer2_Init();
 	Timer3_Init();
+	Timer5_Init();
 }
 
 void Main(void)

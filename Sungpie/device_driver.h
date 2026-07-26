@@ -6,7 +6,7 @@
 #define PWM_INPUT_FREQ       10000
 #define MOTOR_SPEED_INIT     50
 #define MOTOR_SPEED_UP       5
-#define MOTOR_SPEED_STEP(x)  ((MOTOR_SPEED_UP) + ((MOTOR_SPEED_INIT) * (x)))
+#define MOTOR_SPEED_STEP(x)  ((x * MOTOR_SPEED_UP) + (MOTOR_SPEED_INIT))
 
 typedef enum
 {
@@ -29,10 +29,13 @@ extern MotorState curr_state;
 
 extern volatile unsigned char is_key_pressed;
 extern volatile unsigned char is_long_pressed;
+extern volatile int Uart_Data_In;
 
 extern Event event;
 
 extern int lock;
+
+extern volatile unsigned char Uart_Data;
 
 // Clock.c
 extern void Clock_Init(void);
@@ -59,13 +62,13 @@ extern void Timer3_Init(void);
 extern void Timer3_Delay(int time);
 
 extern void Timer5_Init(void);
-extern void Timer5_Out_Pwm_Generator(unsigned short freq);
+extern void Timer5_Out_Pwm_Generator(void);
 extern void Timer5_Stop(void);
 
 // Motor.c
 extern void Motor_Init(void);
 extern void Motor_ProcessKeyState(void);
-extern void Motor_ProcessUartState(char data);
+extern void Motor_ProcessUartState(unsigned char data);
 
 extern void Motor_Main(void);
 extern void Motor_Stop(void);

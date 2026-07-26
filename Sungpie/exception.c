@@ -40,13 +40,13 @@ void TIM2_IRQHandler(void)
 	NVIC_ClearPendingIRQ(28);
 }
 
-extern volatile int Uart_Data_In;
-extern volatile unsigned char Uart_Data;
+//extern volatile int Uart_Data_In;
+
 
 void USART2_IRQHandler(void)
 {
-	Uart_Data = (unsigned char)USART2->DR;
-	Uart_Data_In = 1;
+	Uart_Data = (unsigned char)USART2->DR; 
+	printf("first uart : %d\n", Uart_Data);
 	event = UART_INPUT;
 	NVIC_ClearPendingIRQ(38);
 }
