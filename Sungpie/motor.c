@@ -36,13 +36,30 @@ void Motor_ProcessKeyState(void)
 	}
 	else if(curr_state == MOTOR_CW)
 	{
-		curr_state = MOTOR_CCW;
-		prev_state = MOTOR_CW;
+		if(is_long_pressed == 1)
+		{
+			curr_state = MOTOR_STOP;
+			prev_state = MOTOR_CW;	
+		}
+		else
+		{
+			curr_state = MOTOR_CCW;
+			prev_state = MOTOR_CW;
+		}
+		
 	}
 	else if(curr_state == MOTOR_CCW)
 	{
-		curr_state = MOTOR_CW;
-		prev_state = MOTOR_CCW;
+		if(is_long_pressed == 1)
+		{
+			curr_state = MOTOR_STOP;
+			prev_state = MOTOR_CCW;
+		}
+		else
+		{
+			curr_state = MOTOR_CW;
+			prev_state = MOTOR_CCW;
+		}
 	}
 }
 
@@ -77,6 +94,12 @@ void Motor_Main(void)
 			Timer3_Delay(100);
 			Motor_RotateCW();
 		}
+	}
+	else if(curr_state == MOTOR_STOP)
+	{
+		lock = 0;
+		Motor_Stop();
+		
 	}
 
 }

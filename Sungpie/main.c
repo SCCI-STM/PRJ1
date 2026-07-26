@@ -50,12 +50,14 @@ void State_Handler(void)
     else if(event == KEY_PRESSED)
     {
 		printf("[ Key Pressed ] !!!\n");
+		is_long_pressed = 0;
         event = NONE;
     }
     else if(event == TIMER2_OUT)
     {
         printf("[ 3sec ] !!!\n");
-        
+        Motor_ProcessKeyState();
+		lock = 1;
         event = NONE;
     }
     else if(event == KEY_RELEASED)
@@ -63,10 +65,10 @@ void State_Handler(void)
         if(!is_long_pressed)
         {
 			printf("[ Key Released ] !!!\n");
-            Motor_ProcessKeyState();
-			is_long_pressed = 0;
+            Motor_ProcessKeyState();	
 			lock = 1;
         }
+		is_long_pressed = 0;
 		event = NONE;
     }
 }

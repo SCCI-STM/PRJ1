@@ -30,8 +30,7 @@ void EXTI15_10_IRQHandler(void)
 // extern volatile int TIM2_Expired;
 void TIM2_IRQHandler(void)
 {
-	
-	is_long_pressed = 0;
+	is_long_pressed = 1;
 	event = TIMER2_OUT;
 	
 	// TIM2 Interrupt Pending Clear
