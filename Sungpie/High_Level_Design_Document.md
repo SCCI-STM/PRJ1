@@ -133,22 +133,22 @@
 
 | 파일명             | 구분     | 특수키워드    | 타입         | 변수(상수)명             | 초기값                                      | 역할                     |
 | --------------- | ------ | -------- | ---------- | ------------------- | ---------------------------------------- | ---------------------- |
-| device.driver.h | 정의     |          |            | PWM_INPUT_FREQ      | 10000                                    |                        |
-| device.driver.h | 정의     |          |            | MOTOR_SPEED_INIT    | 50                                       |                        |
-| device.driver.h | 정의     |          |            | MOTOR_SPEED_UP      | 5                                        |                        |
+| device.driver.h | 정의     |          |            | PWM_INPUT_FREQ      | 10000                                    | PWM 파형 주파          |
+| device.driver.h | 정의     |          |            | MOTOR_SPEED_INIT    | 50                                       | 모터 초기              |
+| device.driver.h | 정의     |          |            | MOTOR_SPEED_UP      | 5                                        | 모터 속도 증가 단위     |
 | device.driver.h | 메크로    |          |            | MOTOR_SPEED_STEP(x) | MOTOR_SPEED_INIT + (MOTOR_SPEED_UP \* x) | 모터속도 자동 계산             |
-| timer.c         | 정의     |          |            | TIM2_TICK           | 20                                       |                        |
-| timer.c         | 정의     |          |            | TIM2_FREQ           | 1000000/TIM2_TICK                        |                        |
-| timer.c         | 정의     |          |            | TIM2_PLS_OF_1ms     | 1000/TIM2_TICK                           |                        |
-| timer.c         | 정의     |          |            | TIM2_MAX            | 0xffffu                                  |                        |
+| timer.c         | 정의     |          |            | TIM2_TICK           | 20                                       | Timer2 한 클록의 시간(usec)   |
+| timer.c         | 정의     |          |            | TIM2_FREQ           | 1000000/TIM2_TICK                        | Timer2 주파수 50000Hz        |
+| timer.c         | 정의     |          |            | TIM2_PLS_OF_1ms     | 1000/TIM2_TICK                           | Timer2의 1ms당 클록 수 (50)   |
+| timer.c         | 정의     |          |            | TIM2_MAX            | 0xffffu                                  | Timer2에서 ARR에 저장되는 최대값|
 | timer.c         | 정의     |          |            | TIM2_INIT           | 3000                                     | 3초                     |
-| timer.c         | 정의     |          |            | TIM3_TICK           | 20                                       |                        |
-| timer.c         | 정의     |          |            | TIM3_FREQ           | 1000000/TIM3_TICK                        |                        |
-| timer.c         | 정의     |          |            | TIM3_PLS_OF_1ms     | 1000/TIM3_TICK                           |                        |
+| timer.c         | 정의     |          |            | TIM3_TICK           | 20                                       | Timer3 한 클록의 시간(usec)   |
+| timer.c         | 정의     |          |            | TIM3_FREQ           | 1000000/TIM3_TICK                        | Timer3 주파수 50000Hz   |
+| timer.c         | 정의     |          |            | TIM3_PLS_OF_1ms     | 1000/TIM3_TICK                           | Timer3의 1ms당 클록 수 (50)  |
 | timer.c         | 정의     |          |            | TIM3_1sec           | 1000                                     | 1초                     |
-| timer.c         | 정의     |          |            | TIM5_TICK           | 20                                       |                        |
-| timer.c         | 정의     |          |            | TIM5_FREQ           | 1000000/TIM5_TICK                        |                        |
-| timer.c         | 정의     |          |            | TIM5_PLS_OF_1ms     | 1000/TIM5_TICK                           |                        |
+| timer.c         | 정의     |          |            | TIM5_TICK           | 20                                       | Timer5 한 클록의 시간(usec) |
+| timer.c         | 정의     |          |            | TIM5_FREQ           | 1000000/TIM5_TICK                        | Timer5 주파수 50000Hz   |
+| timer.c         | 정의     |          |            | TIM5_PLS_OF_1ms     | 1000/TIM5_TICK                           | Timer5의 1ms당 클록 수 (50) |
 
 
 
