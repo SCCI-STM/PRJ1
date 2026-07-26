@@ -62,6 +62,7 @@ void Uart2_RX_Interrupt_Enable(int en)
   }
 }
 
+#if 0
 void Uart1_Init(int baud)
 {
   double div;
@@ -141,3 +142,4 @@ char Uart1_Get_Char(void)
 	while(!Macro_Check_Bit_Set(USART1->SR, 5));
 	return (char)USART1->DR;
 }
+#endif

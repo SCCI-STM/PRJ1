@@ -120,77 +120,28 @@ void Timer3_Delay(int time)
 
 	Macro_Clear_Bit(TIM3->CR1, 0);
 }
+// ---------------------------------------
 
-#if 0
 
-void TIM2_Delay(int time)
+// --------------- Timer5 ---------------
+
+
+
+void Timer5_Init(void)
 {
-	int i;
-	unsigned int t = TIME2_PLS_OF_1ms * time;
+	// Timer3 ON (Clock ON)
+	Macro_Set_Bit(RCC->APB1ENR, 3);
 
-	Macro_Set_Bit(RCC->APB1ENR, 0);
+	// Down, Repeat Mode
+	TIM3->CR1 = (0x1 << 4)|(0x0 << 3);
 
-	TIM2->PSC = (unsigned int)(TIMXCLK/(double)TIM2_FREQ + 0.5)-1;
-	TIM2->CR1 = (1<<4)|(1<<3);
-	TIM2->ARR = 0xffff;
-	Macro_Set_Bit(TIM2->EGR,0);
+	// 분주비(1991) 설정
+	TIM3->PSC = (unsigned int)(TIMXCLK/50000.0 + 0.5)-1;
 
-	for(i=0; i<(t/0xffffu); i++)
-	{
-		Macro_Set_Bit(TIM2->EGR,0);
-		Macro_Clear_Bit(TIM2->SR, 0);
-		Macro_Set_Bit(TIM2->CR1, 0);
-		while(Macro_Check_Bit_Clear(TIM2->SR, 0));
-	}
-
-	TIM2->ARR = t % 0xffffu;
-	Macro_Set_Bit(TIM2->EGR,0);
-	Macro_Clear_Bit(TIM2->SR, 0);
-	Macro_Set_Bit(TIM2->CR1, 0);
-	while (Macro_Check_Bit_Clear(TIM2->SR, 0));
-
-	Macro_Clear_Bit(TIM2->CR1, 0);
+	// 카운트 값 설정
+	TIM3->ARR =  TIME2_PLS_OF_1ms * 3000 - 1;
 }
 
-#else
-
-
-unsigned int TIM2_Stopwatch_Stop(void)
-{
-	unsigned int time;
-
-	Macro_Clear_Bit(TIM2->CR1, 0);
-	time = (TIM2_MAX - TIM2->CNT) * TIM2_TICK;
-	return time;
-}
-
-/* Delay Time Extended */
-
-
-
-#endif
-
-void TIM4_Repeat(int time)
-{
-	Macro_Set_Bit(RCC->APB1ENR, 2);
-
-	TIM4->CR1 = (1<<4)|(0<<3);
-	TIM4->PSC = (unsigned int)(TIMXCLK/(double)TIM4_FREQ + 0.5)-1;
-	TIM4->ARR = TIME4_PLS_OF_1ms * time - 1;
-
-	Macro_Set_Bit(TIM4->EGR,0);
-	Macro_Clear_Bit(TIM4->SR, 0);
-	Macro_Set_Bit(TIM4->CR1, 0);
-}
-
-
-
-
-
-void TIM4_Change_Value(int time)
-{
-	TIM4->ARR = TIME4_PLS_OF_1ms * time;
-}
 
 
 #if 0

@@ -63,17 +63,61 @@ void Motor_ProcessKeyState(void)
 	}
 }
 
+void Motor_ProcessUartState(char data)
+{
+	if((data == 'F') || (data == 'f'))
+	{	
+		curr_state = MOTOR_CW;
+		prev_state = MOTOR_CCW;
+	}
+	else if((data == 'S') || (data == 's'))
+	{
+		if(curr_state == MOTOR_CW)
+		{
+			curr_state = MOTOR_STOP;
+			prev_state = MOTOR_CW;
+		}
+		else if(curr_state == MOTOR_CCW)
+		{
+			curr_state = MOTOR_STOP;
+			prev_state = MOTOR_CCW;
+		}
+	}
+	else if((data == 'R') || (data == 'r'))
+	{
+		curr_state = MOTOR_CCW;
+		prev_state = MOTOR_CW;
+	}
+	else if((data >= '0') && (data <= '9'))
+	{
+		
+	}
+
+
+}
+
 void Motor_Main(void)
 {
+	// 현재 정방향, 이전 멈춤
 	if((curr_state == MOTOR_CW) && (prev_state == MOTOR_STOP))
 	{
 		if(lock == 1)
 		{
 			lock = 0;
 			Motor_Stop();
-			Timer3_Delay(100);
+			Timer3_Delay(10);
 			Motor_RotateCW();
 		}	
+	}
+	else if((curr_state == MOTOR_CCW) && (prev_state == MOTOR_STOP))
+	{
+		if(lock == 1)
+		{
+			lock = 0;
+			Motor_Stop();
+			Timer3_Delay(10);
+			Motor_RotateCCW();
+		}
 	}
 	else if((curr_state == MOTOR_CCW) && (prev_state == MOTOR_CW))
 	{
@@ -81,7 +125,7 @@ void Motor_Main(void)
 		{
 			lock = 0;
 			Motor_Stop();
-			Timer3_Delay(100);
+			Timer3_Delay(10);
 			Motor_RotateCCW();
 		}	
 	}
@@ -91,7 +135,7 @@ void Motor_Main(void)
 		{
 			lock = 0;
 			Motor_Stop();
-			Timer3_Delay(100);
+			Timer3_Delay(10);
 			Motor_RotateCW();
 		}
 	}

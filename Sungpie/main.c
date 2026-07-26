@@ -50,7 +50,6 @@ void State_Handler(void)
     else if(event == KEY_PRESSED)
     {
 		printf("[ Key Pressed ] !!!\n");
-		is_long_pressed = 0;
         event = NONE;
     }
     else if(event == TIMER2_OUT)
@@ -71,4 +70,12 @@ void State_Handler(void)
 		is_long_pressed = 0;
 		event = NONE;
     }
+	else if(event == UART_INPUT)
+	{
+		printf("[ Uart Input ] !!!\n");
+		Motor_ProcessUartState(Uart_Data);
+		lock = 1;
+		event = NONE;
+	}
+	
 }

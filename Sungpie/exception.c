@@ -47,6 +47,7 @@ void USART2_IRQHandler(void)
 {
 	Uart_Data = (unsigned char)USART2->DR;
 	Uart_Data_In = 1;
+	event = UART_INPUT;
 	NVIC_ClearPendingIRQ(38);
 }
 

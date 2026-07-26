@@ -65,6 +65,7 @@ extern void Timer5_Stop(void);
 // Motor.c
 extern void Motor_Init(void);
 extern void Motor_ProcessKeyState(void);
+extern void Motor_ProcessUartState(char data);
 
 extern void Motor_Main(void);
 extern void Motor_Stop(void);
@@ -100,19 +101,18 @@ extern void LED_Off(void);
 extern void Key_Wait_Key_Released(void);
 extern void Key_Wait_Key_Pressed(void);
 
-// Uart.c
-extern void Uart1_Init(int baud);
-extern void Uart1_Send_Byte(char data);
-extern void Uart1_Send_String(char *pt);
-extern void Uart1_Printf(char *fmt,...);
-extern char Uart1_Get_Char(void);
-
-// timer.c
 #if 0
+// timer.c
 extern void TIM4_Repeat(int time);
 extern int TIM4_Check_Timeout(void);
 extern void TIM4_Stop(void);
 extern void TIM4_Change_Value(int time);
 
 
+// Uart.c
+extern void Uart1_Init(int baud);
+extern void Uart1_Send_Byte(char data);
+extern void Uart1_Send_String(char *pt);
+extern void Uart1_Printf(char *fmt,...);
+extern char Uart1_Get_Char(void);
 #endif
