@@ -332,7 +332,7 @@ GPIO->ODR => 0;
 GPIOA->MODER => 10 01 //한쪽만 주변장치모드로 해서 타이머 5번의 주파수를 출력해야한다
 GPIOA->AFR[0] => 4번비트에 2(타이머 5번)를 줘야한다
 GPIO->ODR =>  0번비트에 0
-TIM5->CCMR1 -> pwm모드(4~6번비트) 110고정
+TIM5->CCMR1 -> pwm모드(14~12번비트) 110고정
 
 ====0 1일때===== //Motor_RotateCCW
 GPIOA->MODER => 01 10
