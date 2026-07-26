@@ -1,6 +1,6 @@
 # AI시스템 반도체 SW 개발_2기_Cotex-M4프로젝트 보고서
 ### (6팀) `남성현`, `조성수`, `김형진`
-
+깃허브 저장소 https://github.com/SCCI-STM/PRJ1
 
 ## 목차
 
