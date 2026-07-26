@@ -133,22 +133,22 @@
 
 | 파일명             | 구분     | 특수키워드    | 타입         | 변수(상수)명             | 초기값                         | 역할                     |
 | --------------- | ------ | -------- | ---------- | ------------------- | ---------------------------------------- | ---------------------- |
-| device.driver.h | 정의     |          |            | PWM_INPUT_FREQ      | 10000                                    |                        |
-| device.driver.h | 정의     |          |            | MOTOR_SPEED_INIT    | 50                                       |                        |
-| device.driver.h | 정의     |          |            | MOTOR_SPEED_UP      | 5                                        |                        |
-| device.driver.h | 메크로    |          |            | MOTOR_SPEED_STEP(x) | MOTOR_SPEED_INIT + (MOTOR_SPEED_UP \* x) | 모터속도 자동 계산       |
-| timer.c         | 정의     |          |            | TIM2_TICK           | 20                                       |                        |
-| timer.c         | 정의     |          |            | TIM2_FREQ           | 1000000/TIM2_TICK                        |                        |
-| timer.c         | 정의     |          |            | TIM2_PLS_OF_1ms     | 1000/TIM2_TICK                           |                        |
-| timer.c         | 정의     |          |            | TIM2_MAX            | 0xffffu                                  |                        |
+| device.driver.h | 정의     |          |            | PWM_INPUT_FREQ      | 10000                                    | PWM 파형 주파          |
+| device.driver.h | 정의     |          |            | MOTOR_SPEED_INIT    | 50                                       | 모터 초기              |
+| device.driver.h | 정의     |          |            | MOTOR_SPEED_UP      | 5                                        | 모터 속도 증가 단위     |
+| device.driver.h | 메크로    |          |            | MOTOR_SPEED_STEP(x) | MOTOR_SPEED_INIT + (MOTOR_SPEED_UP \* x) | 모터속도 자동 계산             |
+| timer.c         | 정의     |          |            | TIM2_TICK           | 20                                       | Timer2 한 클록의 시간(usec)   |
+| timer.c         | 정의     |          |            | TIM2_FREQ           | 1000000/TIM2_TICK                        | Timer2 주파수 50000Hz        |
+| timer.c         | 정의     |          |            | TIM2_PLS_OF_1ms     | 1000/TIM2_TICK                           | Timer2의 1ms당 클록 수 (50)   |
+| timer.c         | 정의     |          |            | TIM2_MAX            | 0xffffu                                  | Timer2에서 ARR에 저장되는 최대값|
 | timer.c         | 정의     |          |            | TIM2_INIT           | 3000                                     | 3초                     |
-| timer.c         | 정의     |          |            | TIM3_TICK           | 20                                       |                        |
-| timer.c         | 정의     |          |            | TIM3_FREQ           | 1000000/TIM3_TICK                        |                        |
-| timer.c         | 정의     |          |            | TIM3_PLS_OF_1ms     | 1000/TIM3_TICK                           |                        |
+| timer.c         | 정의     |          |            | TIM3_TICK           | 20                                       | Timer3 한 클록의 시간(usec)   |
+| timer.c         | 정의     |          |            | TIM3_FREQ           | 1000000/TIM3_TICK                        | Timer3 주파수 50000Hz   |
+| timer.c         | 정의     |          |            | TIM3_PLS_OF_1ms     | 1000/TIM3_TICK                           | Timer3의 1ms당 클록 수 (50)  |
 | timer.c         | 정의     |          |            | TIM3_1sec           | 1000                                     | 1초                     |
-| timer.c         | 정의     |          |            | TIM5_TICK           | 20                                       |                        |
-| timer.c         | 정의     |          |            | TIM5_FREQ           | 1000000/TIM5_TICK                        |                        |
-| timer.c         | 정의     |          |            | TIM5_PLS_OF_1ms     | 1000/TIM5_TICK                           |                        |
+| timer.c         | 정의     |          |            | TIM5_TICK           | 20                                       | Timer5 한 클록의 시간(usec) |
+| timer.c         | 정의     |          |            | TIM5_FREQ           | 1000000/TIM5_TICK                        | Timer5 주파수 50000Hz   |
+| timer.c         | 정의     |          |            | TIM5_PLS_OF_1ms     | 1000/TIM5_TICK                           | Timer5의 1ms당 클록 수 (50) |
 
 
 
@@ -169,15 +169,14 @@
 | main.c | 상태변수  | volatile | int           | is_long_pressed   | 0    | 키가 3초이상 눌렸는지             |
 | main.c | 상태변수  | volatile | int           | is_key_pressed    | 0    | 키를 누르고 있는 상태인지           |
 | main.c | 상태변수  | volatile | int           | uart_data_in      | 0    | uart로 데이터가 들어왔다면 무슨 타입인지 |
-| main.c | 데이터변수 | volatile | unsigned char | input_motor_dir   | 0    | 데이터 변수                   |
-| main.c | 데이터변수 | volatile | int           | input_motor_speed | 0    | 데이터 변수                   |
+| main.c | 데이터변수 | volatile | unsigned char | input_motor_dir   | 0    | 모터가 어떤 방향인지                   |
+| main.c | 데이터변수 | volatile | int           | input_motor_speed | 0    | Uart로 요청한 모터 속력               |
 
 
 | 파일명    | 구분    | 특수 키워드   | 타입      | 변수명          | 초기값  | 역할                       |
 | ------ | ----- | -------- | ------------- | ----------------- | ---- | ------------------------ |
-| motor.c         | 상태변수   | static   | MotoeState | running_state       | MOTOR_STOP           | 현재 동작하는 상태를 저장         |
-| motor.c         | 플래그 변수 | volatile | int        | TIM3_Expired        | 0                  | 타이머3번이 타임아웃됬는지 확인하는 변수 |
-
+| motor.c         | 상태변수   | static   | MotorState | running_state       | MOTOR_STOP                               | 현재 동작하는 상태를 저장         |
+| motor.c         | 플래그 변수 | volatile | int        | TIM3_Expired        | 0                                        | 타이머3번이 타임아웃됬는지 확인하는 변수 |
 
 ### 5. 함수 설정 
 | 파일명 | 타입 | 함수이름 | 매개변수 | 반환값 | 역할 |
@@ -218,9 +217,9 @@
 
 | 파일명 | 타입 | 함수이름 | 매개변수 | 반환값 | 역할 |
 | :--- | :--- | :--- | :--- | :--- | :--- |
-| **exception.c** | ISR | TIM3_IRQHandler | void | void | 타이머 3 인터럽트 서비스 루틴 |
 | **exception.c** | ISR | EXTI15_10_IRQHandler | void | void | 외부 인터럽트(버튼) 서비스 루틴 |
 | **exception.c** | ISR | TIM2_IRQHandler | void | void | 타이머 2 인터럽트 서비스 루틴 |
+| **exception.c** | ISR | TIM3_IRQHandler | void | void | 타이머 3 인터럽트 서비스 루틴 |
 | **exception.c** | ISR | USART2_IRQHandler | void | void | USART2 통신 인터럽트 서비스 루틴 |
 
 ### 6. main.c - 메인함수 상세
@@ -253,7 +252,7 @@ for(;;)
 				event = None
 	---------------------------------------------------------------------	
 	
-	motor_main(curr)
+	motor_main();
 
 }
 
