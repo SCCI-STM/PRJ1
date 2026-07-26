@@ -6,6 +6,9 @@
 
 ---
 
+## 상위 설계서 (High-Level Design Document )
+[👉 바로가기](./High_Level_Design_Document.md) 
+
 
 
 ## 📋 목차 (Table of Contents)
